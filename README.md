@@ -16,7 +16,7 @@
 1. Install
    - Download the latest `XenForoTranslator.zip` from [Releases](https://github.com/Goleks8/xenforo-phrase-translator/releases)
    - Unzip in any folder (e.g., `C:\XenForoTranslator`)
-   - Change the params of the `config.yml` if necessary([more](#configuration-configyml)).  
+   - Change the params of the `config.yml` if necessary([more](#configuration)).  
   
 2. Export XML from XenForo:
    - Go to Appearance → Languages
