@@ -32,7 +32,7 @@ def translate_phrases(phrases, source_lang, target_lang, batch_size, sleep_sec):
             # protect for lost '}'
             texts_for_translation = []
             for text in texts:
-                text = text.replace('{', '[[').replace('}', ']]')
+                text = text.replace('{', '[[$').replace('}', '$]]')
                 texts_for_translation.append(text)
             
             # Skip
@@ -52,7 +52,12 @@ def translate_phrases(phrases, source_lang, target_lang, batch_size, sleep_sec):
                         
                 time.sleep(sleep_sec)
                 
-                for phrase, t_text in zip(batch, translated):
+                texts_translation = []
+                for text in translated:
+                    text = text.replace('[[&', '{').replace('$]]', '}')
+                    texts_translation.append(text)
+                    
+                for phrase, t_text in zip(batch, texts_translation):
                     if t_text:  # Checking that the translation is not empty
                         phrase.text = etree.CDATA(t_text)
                     pbar.update(1)
