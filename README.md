@@ -53,15 +53,15 @@ pip install -r requirements.txt
 
 ### Basic Usage
 ```bash
-XenForoTranslator.exe -i language.xml )
+XenForoTranslator.exe -i language.xml
 
-bash( python translator.py -i language.xml )
+python translator.py -i language.xml
 ```
 ### Interactive Mode (asks for file path)
 ```bash
-bash( XenForoTranslator.exe )
+XenForoTranslator.exe
 
-bash( python translator.py )
+python translator.py
 ```
 ### Options
 
