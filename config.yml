@@ -1,0 +1,5 @@
+source_lang: "en"               
+target_lang: "ru"               
+language_title: "Russian (RU)"  # new title
+batch_size: 10                  
+sleep_sec: 1.0
