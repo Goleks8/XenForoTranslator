@@ -4,4 +4,4 @@ target_lang: "ru"
 batch_size: 10                  
 sleep_sec: 1.0
 
-xpath: ".//phrase"  # EXAMPLE: ".//phrase | .//description" select for translate tag phrase OR description
+xpath: ".//description"  # EXAMPLE: ".//phrase | .//description" select for translate tag phrase OR description

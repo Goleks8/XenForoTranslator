@@ -14,39 +14,11 @@ from lxml import etree
 from config import load_config
 from translate import translate_phrases
 
-def parse_arguments():
-    parser = argparse.ArgumentParser(
-        description='XenForo XML Phrase Translator by Goleks8',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog='''
-Examples of use:
-  python translator.py language.xml
-  python translator.py language.xml -c custom_config.yml
-  python translator.py language.xml --no-cdata
-        '''
-    )
-    
-    parser.add_argument(
-        '-i','--input_file',
-        help='Path to the XML file with phrases XenForo'
-    )
-    
-    parser.add_argument(
-        '--update-title',
-        action='store_true',
-        help='Change language title'
-    )
-    
-    return parser.parse_args()
-
-
 def main():
     print("=" * 60)
     print("🚀 XenForo XML Phrase Translator")
     print("👤 Author: Goleks8 (https://github.com/Goleks8)")
     print("=" * 60)
-    
-    args = parse_arguments()
     
     config = load_config()
     
@@ -56,9 +28,7 @@ def main():
     SLEEP_SEC        = config.get('sleep_sec', 1.0)
     XPATH            = config.get('xpath', './/phrase')
     
-    path = args.input_file
-    if(path is None):
-        path = input("📄Path to .xml: ")
+    path = input("📄Path to .xml: ")
     
     input_path = Path(path)
     output_path = Path(f"{input_path.stem}-{TARGET_LANG}{input_path.suffix}")
@@ -68,7 +38,7 @@ def main():
     print(f"🌐 Translation: {SOURCE_LANG} -> {TARGET_LANG}")
     print(f"📦 Batch size: {BATCH_SIZE}")
     print(f"⏱️ Pause: {SLEEP_SEC} sec")
-    print(f"📁 xpath: {XPATH} sec")
+    print(f"📄 xpath: {XPATH} sec")
     print("-" * 60)
     
     try:
@@ -80,7 +50,7 @@ def main():
         total_tags_contents = len(phrases)
         
         if total_tags_contents == 0:
-            print("⚠️ Tags not found in XML file!")
+            print("⚠️ Tags not found in XML file! xpath :", XPATH)
             sys.exit(1)
         
         print(f"📊 Tags found for translation: {total_tags_contents}")
