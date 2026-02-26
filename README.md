@@ -63,19 +63,12 @@ The archive includes `config.yml`. Edit it to your needs:
 # Language settings
 source_lang: "en"           # Source language
 target_lang: "ru"           # Target language
-<<<<<<< HEAD
-=======
-language_title: "Russian (RU)"  # New language title (used with --update-title)
->>>>>>> 2173f4f4633a3defdaf30add8ca36d109a9d6e01
 
 # Batch processing
 batch_size: 20              # Phrases per batch
 sleep_sec: 1.0              # Pause between batches
-<<<<<<< HEAD
 
 xpath: ".//phrase"          # ".//phrase | .//description" https://www.w3schools.com/xml/xpath_syntax.asp
-=======
->>>>>>> 2173f4f4633a3defdaf30add8ca36d109a9d6e01
 ```
 
 ## Output File
