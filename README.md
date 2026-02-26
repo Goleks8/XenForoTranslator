@@ -46,15 +46,6 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Basic Usage
-```bash
-XenForoTranslator.exe -i language.xml
-```
-or
-```bash
-python translator.py -i language.xml
-```
-
 ### Interactive Mode (asks for file path)
 ```bash
 XenForoTranslator.exe
@@ -62,21 +53,6 @@ XenForoTranslator.exe
 or
 ```bash
 python translator.py
-```
-### Options
-
-| Option | Description |
-|--------|-------------|
-| `-i, --input_file` | Path to XML file |
-| `--update-title` | Change language title (uses config) |
-
-### Examples
-```bash
-XenForoTranslator.exe -i language.xml
-
-XenForoTranslator.exe -i language.xml --update-title
-
-XenForoTranslator.exe
 ```
 
 ## Configuration (config.yml)
