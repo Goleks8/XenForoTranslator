@@ -2,7 +2,7 @@ import sys
 import time
 
 from deep_translator import GoogleTranslator
-import requests
+from requests.exceptions import ConnectionError, SSLError, Timeout, HTTPError
 from tqdm import tqdm
 from lxml import etree
 from urllib3 import HTTPSConnectionPool
@@ -42,14 +42,20 @@ def translate_phrases(phrases, source_lang, target_lang, batch_size, sleep_sec):
                 continue
             
             try:
-                while True: # BAD
+                while True: # TODO
                     try:
                         translated = translator.translate_batch(texts)
                         break
-                    except requests.exceptions.ConnectionError:
+                    except (ConnectionError, SSLError, Timeout):
                         print("Connection error. Try again in 5 seconds. (CNTR + C for Exit)")
                         time.sleep(5)
-                        
+                    except HTTPError as e:
+                        status_code = e.response.status_code if hasattr(e, 'response') else 'unknown'
+                        if status_code in [429, 500, 502, 503, 504]:
+                            print(f"HTTP error {status_code}. Try again in 5 seconds. (CNTR + C for Exit)")
+                            time.sleep(10)
+                    
+                    
                 time.sleep(sleep_sec)
                 
                 texts_translation = []

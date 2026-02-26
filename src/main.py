@@ -10,7 +10,6 @@ import sys
 import argparse
 from pathlib import Path
 from lxml import etree
-from deep_translator import GoogleTranslator
 
 from config import load_config
 from translate import translate_phrases
@@ -40,11 +39,6 @@ Examples of use:
     
     return parser.parse_args()
 
-def update_language_title(root, new_title):
-    root.set('title', new_title)
-    print(f"✅ Language title changed to: {new_title}")
-
-
 
 def main():
     print("=" * 60)
@@ -58,9 +52,9 @@ def main():
     
     SOURCE_LANG      = config.get('source_lang', 'en')
     TARGET_LANG      = config.get('target_lang', 'ru')
-    LANGUAGE_TITLE   = config.get('language_title', 'Russian (RU)')
     BATCH_SIZE       = config.get('batch_size', 20)
     SLEEP_SEC        = config.get('sleep_sec', 1.0)
+    XPATH            = config.get('xpath', './/phrase')
     
     path = args.input_file
     if(path is None):
@@ -73,7 +67,8 @@ def main():
     print(f"📁 Output file: {output_path}")
     print(f"🌐 Translation: {SOURCE_LANG} -> {TARGET_LANG}")
     print(f"📦 Batch size: {BATCH_SIZE}")
-    print(f"⏱️ Pause: {SLEEP_SEC} сек")
+    print(f"⏱️ Pause: {SLEEP_SEC} sec")
+    print(f"📁 xpath: {XPATH} sec")
     print("-" * 60)
     
     try:
@@ -81,17 +76,14 @@ def main():
         tree = etree.parse(str(input_path), parser)
         root = tree.getroot()
         
-        if args.update_title:
-            update_language_title(root, LANGUAGE_TITLE)
+        phrases = root.findall(XPATH)
+        total_tags_contents = len(phrases)
         
-        phrases = root.findall(".//phrase")
-        total_phrases = len(phrases)
-        
-        if total_phrases == 0:
-            print("⚠️ Phrases not found in XML file!")
+        if total_tags_contents == 0:
+            print("⚠️ Tags not found in XML file!")
             sys.exit(1)
         
-        print(f"📊 Phrases found for translation: {total_phrases}")
+        print(f"📊 Tags found for translation: {total_tags_contents}")
         
         translated, failed = translate_phrases(
             phrases, SOURCE_LANG, TARGET_LANG, BATCH_SIZE, SLEEP_SEC
@@ -107,7 +99,7 @@ def main():
         print("\n" + "=" * 60)
         print("✅ Translation completed!")
         print(f"📊 Statistics:")
-        print(f"   - Total phrases: {total_phrases}")
+        print(f"   - Total Tags: {total_tags_contents}")
         print(f"   - Translated: {translated}")
         print(f"   - Errors: {failed}")
         print(f"📁 The result is saved: {output_path}")
@@ -127,6 +119,6 @@ if __name__ == "__main__":
         print("Exit...")
         sys.exit(0)
     except Exception as e:
-        print(f"\n❌ Ошибка: {e}")
+        print(f"\n❌ Error: {e}")
         sys.exit(1)
     input("Press Enter to exit...")

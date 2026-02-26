@@ -10,8 +10,7 @@ def load_config(config_path="config.yml"):
         return {
             'source_lang': 'en',
             'target_lang': 'ru',
-            'language_title': 'Russian (RU)',
             'batch_size': 10,
             'sleep_sec': 1.0,
-            'output_suffix': '_RU'
+            'xpath': './/phrase'
         }
